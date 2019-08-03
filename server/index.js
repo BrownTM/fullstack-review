@@ -15,7 +15,6 @@ app.post('/repos', function (req, res) {
 
   if (req.body.data) {
     helpers.getReposByUsername(req.body.data, (gitArr) => {
-      // console.log(gitArr);
       gitArr.forEach((repo) => {
         db.save(repo);
       });
