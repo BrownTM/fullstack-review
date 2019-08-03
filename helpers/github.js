@@ -15,11 +15,11 @@ let getReposByUsername = (username, callback) => {
     }
   };
 
-  request.get(options, (err, gitObj) => {
+  request.get(options, (err, gitArr) => {
     if (err) {
-      console.error(err);
+      return console.error(err);
     }
-    callback(gitObj);
+    callback(JSON.parse(gitArr.body));
   });
 
 }
