@@ -28,6 +28,13 @@ app.post('/repos', function (req, res) {
 app.get('/repos', function (req, res) {
   // TODO - your code here!
   // This route should send back the top 25 repos
+  db.fetch().then((repos) => {
+    res.status(200);
+    res.send(repos.slice(0, 25));
+  }).catch((err) => {
+    console.error(err);
+    res.sendStatus(500);
+  });
 });
 
 let port = 1128;

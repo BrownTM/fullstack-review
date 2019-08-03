@@ -13,6 +13,10 @@ class App extends React.Component {
 
   }
 
+  componentDidMount () {
+    this.getTop();
+  }
+
   search (term) {
     console.log(`${term} was searched`);
     // TODO
@@ -20,7 +24,19 @@ class App extends React.Component {
       url: '/repos',
       type: 'POST',
       data: {data: term},
-      success: () => {console.log('POSTED!')}
+      success: () => this.getTop()
+    });
+  }
+
+  getTop() {
+    $.ajax({
+      url: '/repos',
+      type: 'GET',
+      success: (repos) => {
+        this.setState({
+          repos: repos
+        });
+      }
     });
   }
 

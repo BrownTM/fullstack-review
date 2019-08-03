@@ -37,4 +37,9 @@ let save = (repo) => {
   });
 };
 
+let fetch = () => {
+  return Repo.find({}).sort({forkCount: 'descending'});
+};
+
 module.exports.save = save;
+module.exports.fetch = fetch;
