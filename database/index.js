@@ -20,7 +20,6 @@ let save = (repo) => {
   // TODO: Your code here
   // This function should save a repo or repos to
   // the MongoDB
-  // console.log(repo);
   var document = new Repo({
     repoId: repo.id,
     username: repo.owner.login,
@@ -29,11 +28,15 @@ let save = (repo) => {
     description: repo.description,
     forkCount: repo.forks_count
   });
-  document.save((err) => {
-    if (err) {
-      return console.error(err);
-    }
-    console.log('Success');
+
+  return new Promise((resolve, reject) => {
+    document.save((err, repo) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(repo);
+      }
+    });
   });
 };
 

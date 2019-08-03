@@ -14,12 +14,15 @@ app.post('/repos', function (req, res) {
   // save the repo information in the database
 
   if (req.body.data) {
-    helpers.getReposByUsername(req.body.data, (gitArr) => {
-      gitArr.forEach((repo) => {
+    helpers.getReposByUsername(req.body.data).then((gitArr) => {
+      return Promise.all(gitArr.map((repo) => {
         db.save(repo);
-      });
+      }));
+    }).then(() => {
+      res.sendStatus(201);
+    }).catch((err) => {
+      res.sendStatus(400);
     });
-    res.sendStatus(201);
   } else {
     res.sendStatus(400);
   }

@@ -10,7 +10,7 @@ class App extends React.Component {
     this.state = {
       repos: []
     }
-
+    this.getTop.bind(this);
   }
 
   componentDidMount () {
@@ -24,7 +24,13 @@ class App extends React.Component {
       url: '/repos',
       type: 'POST',
       data: {data: term},
-      success: () => this.getTop()
+      success: () => {
+        this.getTop();
+        // this.setState({
+        //   repos: []
+        // });
+        console.log('Made it');
+      }
     });
   }
 
@@ -33,9 +39,11 @@ class App extends React.Component {
       url: '/repos',
       type: 'GET',
       success: (repos) => {
+        console.log('BEFORE', this.state.repos);
         this.setState({
           repos: repos
         });
+        console.log('AFTER', this.state.repos);
       }
     });
   }

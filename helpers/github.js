@@ -15,11 +15,14 @@ let getReposByUsername = (username, callback) => {
     }
   };
 
-  request.get(options, (err, gitArr) => {
-    if (err) {
-      return console.error(err);
-    }
-    callback(JSON.parse(gitArr.body));
+  return new Promise((resolve, reject) => {
+    request(options, (err, res, body) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(JSON.parse(body));
+      }
+    });
   });
 
 }
